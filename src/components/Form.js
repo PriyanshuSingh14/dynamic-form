@@ -10,10 +10,16 @@ function Form() {
         phonenumber: [''],
         address: ['']
     });
+    //useState hook used to store the values from the from using formData object of different data types and setFormData-function
+
     // const [apiResponse, setApiResponse] = useState(null);
+    //trying to use postman mock servers
 
     const [errors, setErrors] = useState({});
+    //useState hook used to set the errors using setErrors function to show if any
 
+
+    //validateField is the function declared to check the correctness of the credentials filled by the user by using simple logics.Here different errors have been defined for different input fields .
     const validateField = (name, value) => {
         let error = '';
         if (name === 'username') {
@@ -52,6 +58,8 @@ function Form() {
         return error;
     };
 
+
+    //handleChange function used to check for the changes in the input field and saving it to formData applied to diffrent form fields
     const handleChange = (e, index, field) => {
         const { name, value } = e.target;
         let updatedFields;
@@ -68,10 +76,13 @@ function Form() {
         setErrors({ ...errors, [name]: error });
     };
 
+
+    //handleAddField is used to add additional input field for the dynamic form
     const handleAddField = (field) => {
         setFormData({ ...formData, [field]: [...formData[field], ''] });
     };
 
+    //handleRemoveField is used to remove additional input field for the dynamic form
     const handleRemoveField = (index, field) => {
         const updatedFields = formData[field].filter((_, i) => i !== index);
         setFormData({ ...formData, [field]: updatedFields });
@@ -80,6 +91,8 @@ function Form() {
         setErrors(updatedErrors);
     };
 
+
+    //handleSubmit is being called when the user clicks submit button which then calls validateForm to check the credentials filled by the user
     const handleSubmit = (e) => {
         e.preventDefault();
         const newErrors = validateForm(formData);
@@ -92,6 +105,8 @@ function Form() {
         }
     };
 
+
+    //trying to use postman -mock-servers
 
     // const handleSubmit = async (e) => {
     //     e.preventDefault();
@@ -123,6 +138,7 @@ function Form() {
     // };
 
 
+    //validateForm is used to validate the whole form 
     const validateForm = (data) => {
         const errors = {};
 
@@ -145,6 +161,8 @@ function Form() {
         return errors;
     };
 
+
+    //useEffect used to call the validateField whenever there is some changes in the form
     useEffect(() => {
         Object.keys(formData).forEach((key) => {
             if (Array.isArray(formData[key])) {
@@ -263,7 +281,7 @@ function Form() {
                         <label className="form-label">Address:</label>
                         {formData.address.map((addr, index) => (
                             <div key={index} className="dynamic-field">
-                               
+
                                 <input
                                     className="form-input"
                                     type="text"
